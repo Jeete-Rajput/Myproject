@@ -3,19 +3,22 @@ import './CategoriesSection.css';
 
 /**
  * CategoriesSection Component - Browse books by categories
+ * @param {Function} onCategoryClick - Called when a category is clicked with the category name
+ * @param {string} activeCategory - Currently active/selected category name
  */
-const CategoriesSection = () => {
+const CategoriesSection = ({ onCategoryClick, activeCategory }) => {
   const categories = [
     { id: 1, name: 'Fiction', icon: '📖', color: '#2563eb' },
     { id: 2, name: 'Non-Fiction', icon: '📚', color: '#7c3aed' },
     { id: 3, name: 'Science', icon: '🔬', color: '#16a34a' },
     { id: 4, name: 'History', icon: '📜', color: '#dc2626' },
     { id: 5, name: 'Biography', icon: '👤', color: '#ea580c' },
-    { id: 6, name: 'Self-Help', icon: '💡', color: '#2dd4bf' },
+    { id: 6, name: 'Technology', icon: '💻', color: '#2dd4bf' },
+    { id: 7, name: 'Other', icon: '💡', color: '#f59e0b' },
   ];
 
   return (
-    <section className="categories-section">
+    <section className="categories-section" id="categories-section">
       <div className="categories-container">
         <div className="categories-header">
           <h2>Browse by Category</h2>
@@ -26,9 +29,10 @@ const CategoriesSection = () => {
           {categories.map((category, index) => (
             <button
               key={category.id}
-              className="category-card"
+              className={`category-card${activeCategory === category.name ? ' active' : ''}`}
               style={{ '--delay': `${index * 0.1}s`, '--color': category.color }}
-              aria-label={category.name}
+              aria-label={`Browse ${category.name} books`}
+              onClick={() => onCategoryClick && onCategoryClick(category.name)}
             >
               <div className="category-icon">{category.icon}</div>
               <div className="category-name">{category.name}</div>

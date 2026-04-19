@@ -3,8 +3,9 @@ import './FeaturedSection.css';
 
 /**
  * FeaturedSection Component - Displays featured/trending books
+ * @param {Function} onReadNow - Called when "Read Now" is clicked on any book
  */
-const FeaturedSection = () => {
+const FeaturedSection = ({ onReadNow }) => {
   const featuredBooks = [
     {
       id: 1,
@@ -48,7 +49,13 @@ const FeaturedSection = () => {
                 <h3>{book.title}</h3>
                 <p>{book.author}</p>
               </div>
-              <button className="featured-btn">Read Now</button>
+              <button
+                className="featured-btn"
+                onClick={() => onReadNow && onReadNow(book.title)}
+                title={`Search for ${book.title}`}
+              >
+                Read Now
+              </button>
             </div>
           ))}
         </div>

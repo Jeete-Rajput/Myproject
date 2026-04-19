@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { loginUser as loginUserAPI, registerUser as registerUserAPI, logoutUser, getStoredUser, getAuthToken } from '../services/authService';
 
 // Create Auth Context
 const AuthContext = createContext();
@@ -8,54 +9,76 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userType, setUserType] = useState(null); // 'user' or 'admin'
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Check if user is already logged in
   useEffect(() => {
-    const savedAuth = localStorage.getItem('auth');
-    if (savedAuth) {
-      try {
-        const authData = JSON.parse(savedAuth);
-        setIsAuthenticated(true);
-        setUserType(authData.userType);
-        setUser(authData.user);
-      } catch (error) {
-        console.error('Error restoring auth:', error);
-      }
+    const token = getAuthToken();
+    const storedUser = getStoredUser();
+    
+    if (token && storedUser) {
+      setIsAuthenticated(true);
+      setUserType(storedUser.role);
+      setUser(storedUser);
     }
+    setLoading(false);
   }, []);
 
-  const login = (email, password, type) => {
-    // Simulate login - replace with actual API call
-    const userData = {
-      id: Math.random().toString(36).substr(2, 9),
-      email,
-      name: email.split('@')[0],
-      type,
-    };
+  const login = async (email, password) => {
+    setError(null);
+    try {
+      const response = await loginUserAPI(email, password);
 
-    localStorage.setItem(
-      'auth',
-      JSON.stringify({
-        userType: type,
-        user: userData,
-      })
-    );
+      if (response.success && response.user) {
+        setIsAuthenticated(true);
+        setUserType(response.user.role);
+        setUser(response.user);
+        return { success: true };
+      } else {
+        const msg = response.message || 'Login failed';
+        setError(msg);
+        return { success: false, message: msg };
+      }
+    } catch (err) {
+      const errorMsg = err.message || 'Login failed';
+      setError(errorMsg);
+      return { success: false, message: errorMsg };
+    }
+  };
 
-    setIsAuthenticated(true);
-    setUserType(type);
-    setUser(userData);
-    return true;
+  const register = async (userData) => {
+    setError(null);
+    try {
+      const response = await registerUserAPI(userData);
+
+      if (response.success && response.user) {
+        setIsAuthenticated(true);
+        setUserType(response.user.role);
+        setUser(response.user);
+        return { success: true };
+      } else {
+        const msg = response.message || 'Registration failed';
+        setError(msg);
+        return { success: false, message: msg };
+      }
+    } catch (err) {
+      const errorMsg = err.message || 'Registration failed';
+      setError(errorMsg);
+      return { success: false, message: errorMsg };
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('auth');
+    logoutUser();
     setIsAuthenticated(false);
     setUserType(null);
     setUser(null);
+    setError(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userType, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userType, user, login, register, logout, loading, error }}>
       {children}
     </AuthContext.Provider>
   );

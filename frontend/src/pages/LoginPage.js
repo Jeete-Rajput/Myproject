@@ -5,11 +5,13 @@ import './LoginPage.css';
 /**
  * LoginPage Component - Authentication page with user and admin login
  */
-const LoginPage = () => {
+const LoginPage = ({ onSwitchToRegistration, isAdminMode = false }) => {
   const { login } = useAuth();
-  const [loginType, setLoginType] = useState('user'); // 'user' or 'admin'
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const loginType = isAdminMode ? 'admin' : 'user';
+  
+  // Pre-fill demo admin credentials if on admin route
+  const [email, setEmail] = useState(isAdminMode ? 'admin@bookstore.com' : '');
+  const [password, setPassword] = useState(isAdminMode ? 'admin123' : '');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -32,25 +34,16 @@ const LoginPage = () => {
     }
 
     try {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      const success = login(email, password, loginType);
-      if (success) {
-        // Page will redirect via Auth component
-      } else {
-        setError('Login failed. Please try again.');
+      // Call backend API
+      const result = await login(email, password);
+      if (!result.success) {
+        setError(result.message || 'Login failed. Please check your credentials.');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError(err.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleDemoLogin = (type) => {
-    const demoEmail = type === 'admin' ? 'admin@bookstore.com' : 'user@bookstore.com';
-    login(demoEmail, 'demo123', type);
   };
 
   return (
@@ -94,24 +87,7 @@ const LoginPage = () => {
         {/* Right Section - Login Form */}
         <div className="login-right">
           {/* User/Admin Selector */}
-          <div className="login-type-selector">
-            <button
-              className={`type-btn ${loginType === 'user' ? 'active' : ''}`}
-              onClick={() => setLoginType('user')}
-              disabled={loading}
-            >
-              <span className="type-icon">👤</span>
-              User Login
-            </button>
-            <button
-              className={`type-btn ${loginType === 'admin' ? 'active' : ''}`}
-              onClick={() => setLoginType('admin')}
-              disabled={loading}
-            >
-              <span className="type-icon">🛡️</span>
-              Admin Login
-            </button>
-          </div>
+          {/* Removed login-type-selector entirely */}
 
           {/* Login Form */}
           <form className="login-form" onSubmit={handleLogin}>
@@ -186,18 +162,20 @@ const LoginPage = () => {
               )}
             </button>
 
-            {/* Demo Login */}
-            <div className="demo-section">
-              <p className="demo-text">Try demo account:</p>
-              <button
-                type="button"
-                className="demo-btn"
-                onClick={() => handleDemoLogin(loginType)}
-                disabled={loading}
-              >
-                {loginType === 'admin' ? '🛡️ Demo Admin' : '👤 Demo User'}
-              </button>
-            </div>
+            {/* Demo Login Information (only shown for user mode, admin is pre-filled) */}
+            {!isAdminMode && (
+              <div className="demo-section">
+                <p className="demo-text">📝 First time here?</p>
+                <button
+                  type="button"
+                  className="demo-btn"
+                  onClick={onSwitchToRegistration}
+                  disabled={loading}
+                >
+                  📚 Create New Account
+                </button>
+              </div>
+            )}
 
             {/* Footer Links */}
             <div className="form-footer">
@@ -212,9 +190,11 @@ const LoginPage = () => {
           </form>
 
           {/* Sign Up Link */}
-          <div className="signup-section">
-            <p>Don't have an account? <a href="#!">Sign up here</a></p>
-          </div>
+          {!isAdminMode && (
+            <div className="signup-section">
+              <p>Don't have an account? <button className="signup-link" onClick={onSwitchToRegistration}>Sign up here</button></p>
+            </div>
+          )}
         </div>
       </div>
     </div>

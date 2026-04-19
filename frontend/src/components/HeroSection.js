@@ -3,8 +3,10 @@ import './HeroSection.css';
 
 /**
  * HeroSection Component - Stunning hero banner
+ * @param {Function} onStartExploring - Called when "Start Exploring" is clicked
+ * @param {Function} onBrowseCategories - Called when "Browse Categories" is clicked
  */
-const HeroSection = () => {
+const HeroSection = ({ onStartExploring, onBrowseCategories }) => {
   return (
     <section className="hero-section">
       <div className="hero-background">
@@ -27,10 +29,10 @@ const HeroSection = () => {
         </div>
 
         <div className="hero-buttons">
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={onStartExploring}>
             <span>🔍 Start Exploring</span>
           </button>
-          <button className="btn btn-secondary">
+          <button className="btn btn-secondary" onClick={onBrowseCategories}>
             <span>📚 Browse Categories</span>
           </button>
         </div>

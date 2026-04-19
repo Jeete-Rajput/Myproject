@@ -134,6 +134,31 @@
   border: 1px solid var(--border-color);
 }
 
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.clear-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: rgba(37, 99, 235, 0.12);
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-filter-btn:hover {
+  background: rgba(37, 99, 235, 0.2);
+}
+
 .app-footer {
   background: linear-gradient(180deg, var(--header-bg) 0%, var(--card-bg-hover) 100%);
   border-top: 1px solid var(--border-color);
@@ -222,3 +247,79 @@
 .search-bar {
   animation: slideInUp 0.5s ease-out 0.1s both;
 }
+
+/* Loading Container */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--bg-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+.loader {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-color);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* User Info Bar (shown on user dashboard after login) */
+.user-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 32px;
+  background: linear-gradient(135deg, var(--card-bg), var(--card-bg-hover));
+  border-bottom: 1px solid var(--border-color);
+  animation: slideInDown 0.4s ease-out;
+}
+
+.user-welcome {
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
+.user-welcome strong {
+  color: var(--text-color);
+}
+
+.user-logout-btn {
+  padding: 6px 16px;
+  background: transparent;
+  border: 1.5px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--secondary-text-color);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-logout-btn:hover {
+  border-color: var(--error-color);
+  color: var(--error-color);
+  background: rgba(220, 38, 38, 0.05);
+}
+
+@media (max-width: 480px) {
+  .user-info-bar {
+    padding: 8px 16px;
+    gap: 8px;
+  }
+
+  .user-welcome {
+    font-size: 12px;
+  }
+}
+

@@ -22,7 +22,13 @@ Myproject/
 │   └── README.md                  # Frontend documentation
 │
 └── backend/                        # Backend API (Node.js/Express)
-    └── [To be implemented]
+    ├── config/                     # Database configuration
+    ├── controllers/                # Business logic
+    ├── models/                     # MongoDB schemas
+    ├── routes/                     # API endpoints
+    ├── middleware/                 # Authentication, CORS
+    ├── server.js                   # Main server file
+    └── package.json                # Backend dependencies
 ```
 
 ## ✨ Key Features
@@ -116,11 +122,14 @@ npm start
 - CSS animations and transitions
 - Debounced search functionality
 
-### Backend (To be implemented)
-- Node.js + Express
-- MongoDB/PostgreSQL
-- JWT authentication
-- RESTful API endpoints
+### Backend ✅ (Fully Implemented)
+- **Node.js + Express** - Web server framework
+- **MongoDB + Mongoose** - NoSQL database with ODM
+- **JWT** - Authentication tokens
+- **bcryptjs** - Password hashing & security
+- **CORS** - Cross-origin request handling
+- RESTful API design
+- Role-based access control (Admin/User)
 
 ## 📁 Frontend Project Structure
 
@@ -235,16 +244,67 @@ Fully responsive across all device sizes:
 - ✅ Mobile (480px - 768px)
 - ✅ Small Mobile (<480px)
 
-## 🔗 API Endpoints (Expected)
+## 🔗 Backend API Implementation
 
+### Backend Setup
+
+The backend is fully implemented with Express.js and MongoDB. See [Backend README](backend/README.md) for details.
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies
+npm install
+
+# Create .env file
+cp .env.example .env
+
+# Start development server
+npm run dev
 ```
-GET    /api/books              # All books
-GET    /api/books/:id          # Single book
-GET    /api/books/search?q=    # Search books
-POST   /api/books              # Create book
-PUT    /api/books/:id          # Update book
+
+**Backend API runs at:** `http://localhost:5000`
+
+### API Endpoints
+
+#### Books (Public)
+```
+GET    /api/books              # Get all books (with search & filter)
+GET    /api/books/:id          # Get single book
+```
+
+#### Books (Admin Only)
+```
+POST   /api/books/add          # Add new book
+PUT    /api/books/issue/:id    # Issue book to user
+PUT    /api/books/return/:id   # Return book from user
 DELETE /api/books/:id          # Delete book
 ```
+
+#### Users (Public)
+```
+POST   /api/users/register     # Register new user
+POST   /api/users/login        # Login user
+```
+
+#### Users (Protected)
+```
+GET    /api/users/profile      # Get user profile
+PUT    /api/users/:id          # Update user profile
+GET    /api/users              # Get all users (Admin only)
+```
+
+### Backend Technologies
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - ODM for MongoDB
+- **JWT** - Token authentication
+- **bcryptjs** - Password hashing
+- **CORS** - Cross-origin requests
+
+### Full Documentation
+See [SETUP_GUIDE.md](SETUP_GUIDE.md) for complete backend and frontend integration guide.
 
 ## 🛠️ Available Scripts
 
@@ -291,28 +351,28 @@ npm run eject         # Eject from Create React App
 
 ## 🔮 Roadmap
 
-### Phase 1 (Current)
+### Phase 1 ✅ (Complete)
 - ✅ React frontend with auth
 - ✅ Premium UI components
 - ✅ Dark mode toggle
 - ✅ Search & sort functionality
 
-### Phase 2
-- [ ] Backend API implementation
-- [ ] User profiles
-- [ ] Book wishlist/favorites
-- [ ] User reviews & ratings
+### Phase 2 ✅ (Complete)
+- ✅ Backend API implementation (Express.js + MongoDB)
+- ✅ User authentication (JWT)
+- ✅ Book management (CRUD)
+- ✅ Book issuing/returning system
 
 ### Phase 3
+- [ ] User profiles & wishlist
+- [ ] Book reviews & ratings
+- [ ] Email notifications
+- [ ] Advanced recommendations
+
+### Phase 4
 - [ ] Shopping cart
 - [ ] Payment integration
 - [ ] Order management
-- [ ] Email notifications
-
-### Phase 4
-- [ ] Advanced recommendations
-- [ ] Social sharing
-- [ ] Reading progress tracking
 - [ ] Author dashboard
 
 ## 🚀 Deployment

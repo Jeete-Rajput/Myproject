@@ -322,6 +322,192 @@
   }
 }
 
+/* Add Book Form */
+.add-book-form {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(51, 65, 85, 0.9));
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 14px;
+  padding: 28px;
+  margin-bottom: 2rem;
+  animation: slideInUp 0.4s ease-out;
+}
+
+.add-book-form h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #60a5fa;
+  margin: 0 0 20px 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.add-book-form .form-group {
+  margin-bottom: 16px;
+}
+
+.add-book-form .form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 6px;
+}
+
+.add-book-form .form-group .required {
+  color: #f87171;
+}
+
+.add-book-form .form-group input,
+.add-book-form .form-group select,
+.add-book-form .form-group textarea {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #f1f5f9;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.add-book-form .form-group input:focus,
+.add-book-form .form-group select:focus,
+.add-book-form .form-group textarea:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+}
+
+.add-book-form .form-group select option {
+  background: #1e293b;
+  color: #f1f5f9;
+}
+
+.add-book-form .form-group textarea {
+  resize: vertical;
+}
+
+/* Data Tables */
+.data-table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.data-table thead {
+  background: rgba(30, 41, 59, 0.9);
+}
+
+.data-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  white-space: nowrap;
+}
+
+.data-table tbody tr {
+  background: rgba(15, 23, 42, 0.4);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  transition: background 0.2s;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.data-table td {
+  padding: 13px 16px;
+  color: #e2e8f0;
+  vertical-align: middle;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(148, 163, 184, 0.2);
+  color: #cbd5e1;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-green {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-red {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-blue {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Error / Success messages in admin */
+.error-msg {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.success-msg {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* CSS variable shim (dark dashboard always) */
+.admin-dashboard {
+  --text-primary: #f1f5f9;
+}
+
 @media (max-width: 768px) {
   .admin-header {
     flex-direction: column;
@@ -350,5 +536,9 @@
 
   .activities-section {
     padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
   }
 }
